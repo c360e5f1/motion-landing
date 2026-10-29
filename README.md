@@ -1,7 +1,7 @@
 # motion-landing
 Motion Landing is a small progressive web application (PWA) that displays user-provided icons in SVG or PNG format as motion graphics. The application also starts a wake lock to prevent the device from going to sleep or shutting off the display.
 
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/d52d627d-a79b-4654-a1f0-86e5ee78e6cb" />
+<img width="853" height="480" alt="5s" src="https://github.com/user-attachments/assets/99818612-ef69-4e8e-bc8d-c6f9d145cbdb" />
 
 ## Features
 
