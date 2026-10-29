@@ -218,9 +218,12 @@ body {
   text-align: center;
 }
 
+/* Text may span up to 90% of the viewport width. No inline padding, so the
+ * title gets the full 90vw (box-sizing is border-box); the remaining 5vw on
+ * each side keeps it off the screen edges. */
 .hero-content {
-  max-width: min(92vw, 1200px);
-  padding: clamp(24px, 6vw, 64px) clamp(16px, 4vw, 64px);
+  max-width: 90vw;
+  padding: clamp(24px, 6vw, 64px) 0;
 }
 
 /* Title scales with both width and height so it always fits. */
@@ -247,8 +250,13 @@ body {
   animation: word-in 1s var(--ease) forwards;
 }
 
-/* Highlighted words are filled with a gradient that shimmers once revealed. */
+/* Highlighted words are filled with a gradient that shimmers once revealed.
+ * The text is only visible where the background paints, so padding extends it
+ * past the tight line box to cover descenders and overhanging glyphs; the
+ * negative margins cancel the padding so spacing and line height don't change. */
 .hero-title .word-highlight {
+  padding: 0.08em 0.06em 0.18em;
+  margin: -0.08em -0.06em -0.18em;
   background: linear-gradient(100deg, var(--grad-1), var(--grad-2) 50%, var(--grad-3), var(--grad-1));
   background-size: 300% 100%;
   -webkit-background-clip: text;

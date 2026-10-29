@@ -1,7 +1,7 @@
 'use strict';
 
 // Bump this when the application shell changes to evict old caches.
-const CACHE_NAME = 'motion-landing-v6';
+const CACHE_NAME = 'motion-landing-v7';
 
 const SHELL = [
   '/',
