@@ -21,7 +21,7 @@ Run this in a container with `compose.yml`
 
 ```
 services:
-    vigl:
+    motion-landing:
       image: ghcr.io/c360e5f1/motion-landingl:latest
       ports:
         - "8080:8080"
