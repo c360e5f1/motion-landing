@@ -17,6 +17,19 @@ Motion Landing is a small progressive web application (PWA) that displays user-p
 
 ## Running
 
+Run this in a container with `compose.yml`
+
+```
+services:
+    vigl:
+      image: ghcr.io/c360e5f1/motion-landingl:latest
+      ports:
+        - "8080:8080"
+      restart: unless-stopped
+```
+
+Run this as a `node` application
+
 ```bash
 npm start
 ```
