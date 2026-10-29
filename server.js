@@ -9,7 +9,7 @@
  *
  * Environment variables:
  *   HOST       Interface to bind (default 127.0.0.1)
- *   PORT       Port to listen on (default 8000)
+ *   PORT       Port to listen on (default 8080)
  *   ICONS_DIR  Directory containing .svg/.png icons (default ./icons)
  *   TITLE      Default page title (default "Motion Landing")
  *   SUBTITLE   Default page subtitle
@@ -35,7 +35,7 @@ function parsePort(value) {
 
 const config = {
   host: process.env.HOST || '127.0.0.1',
-  port: parsePort(process.env.PORT ?? '8000'),
+  port: parsePort(process.env.PORT ?? '8080'),
   iconsDir: path.resolve(process.env.ICONS_DIR || path.join(ROOT, 'icons')),
   publicDir: path.join(ROOT, 'public'),
   templatePath: path.join(ROOT, 'templates', 'index.html'),
