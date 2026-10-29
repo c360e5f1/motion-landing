@@ -28,7 +28,7 @@ services:
       restart: unless-stopped
 ```
 
-Run this as a `node` application
+Or, run this as a `node` application
 
 ```bash
 npm start
