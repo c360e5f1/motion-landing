@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Motion Landing",
+  "short_name": "Motion Landing",
+  "description": "Icons in fluid motion that keep your screen awake.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#0c1622",
+  "theme_color": "#0c1622",
+  "categories": ["utilities", "entertainment"],
+  "icons": [
+    { "src": "/app-icons/tv.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/app-icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/app-icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

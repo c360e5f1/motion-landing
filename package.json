@@ -1,0 +1,20 @@
+{
+  "name": "motion-landing",
+  "version": "1.0.0",
+  "description": "A small progressive web application that displays user-provided icons as fluid motion graphics and keeps the screen awake.",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "bin": {
+    "motion-landing": "server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "app-icons": "node scripts/generate-app-icons.mjs"
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Motion Landing">
+  <rect width="512" height="512" rx="112" fill="#232f3e"/>
+  <path d="M256 168 196 92M256 168 316 92" fill="none" stroke="#ff9900" stroke-width="24" stroke-linecap="round"/>
+  <rect x="92" y="168" width="328" height="232" rx="32" fill="#ff9900"/>
+  <rect x="124" y="198" width="264" height="172" rx="16" fill="#0f1b2a"/>
+  <rect x="196" y="418" width="120" height="20" rx="10" fill="#ff9900"/>
+</svg>

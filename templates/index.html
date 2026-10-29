@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{TITLE_TEXT}}</title>
+  <meta name="description" content="{{SUBTITLE}}">
+  <meta name="theme-color" content="#0c1622">
+  <meta name="color-scheme" content="dark light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Motion Landing">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/app-icons/tv.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/app-icons/icon-192.png">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/theme-init.js"></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="motion-layer" id="motion-layer" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <canvas class="scene" id="scene"></canvas>
+    <div class="veil"></div>
+    <div class="icon-sources" id="icon-sources">
+    {{ICONS}}
+    </div>
+  </div>
+
+  <main class="hero" id="hero" data-default-title="{{TITLE}}" data-default-subtitle="{{SUBTITLE}}">
+    <div class="hero-content">
+      <h1 class="hero-title" id="title">{{TITLE_TEXT}}</h1>
+      <div class="hero-rule" id="rule" aria-hidden="true"></div>
+      <p class="hero-subtitle" id="subtitle">{{SUBTITLE}}</p>
+    </div>
+  </main>
+
+  <button type="button" class="icon-button corner corner-top-left" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+    </svg>
+  </button>
+
+  <time class="clock corner corner-top-right" id="clock" datetime="">&nbsp;</time>
+
+  <button type="button" class="icon-button corner corner-bottom-left" id="wake-toggle" aria-pressed="false" aria-label="Keep screen awake" title="Keep screen awake" data-state="off">
+    <svg class="icon icon-awake" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <svg class="icon icon-asleep" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+      <path d="M3 3l18 18"/>
+    </svg>
+  </button>
+
+  <button type="button" class="icon-button corner corner-bottom-right" id="settings-open" aria-haspopup="dialog" aria-label="Edit title and subtitle" title="Edit title and subtitle">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 20h4L19 9l-4-4L4 16v4z"/>
+      <path d="M13.5 6.5l4 4"/>
+    </svg>
+  </button>
+
+  <dialog class="modal" id="settings-dialog" aria-labelledby="settings-heading">
+    <form class="modal-form" id="settings-form" novalidate>
+      <header class="modal-header">
+        <h2 id="settings-heading">Page text</h2>
+        <button type="button" class="icon-button icon-button-plain" data-action="close" aria-label="Close" title="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="title-input">Title</label>
+          <input class="input" id="title-input" name="title" type="text" maxlength="80" autocomplete="off" required aria-describedby="title-hint title-error">
+          <p class="form-hint" id="title-hint">Wrap words in *asterisks* to highlight them with the gradient. Without asterisks, the whole title is highlighted.</p>
+          <p class="form-error" id="title-error" hidden>Enter a title.</p>
+        </div>
+        <div class="form-field">
+          <label for="subtitle-input">Subtitle <span class="label-info">- optional</span></label>
+          <input class="input" id="subtitle-input" name="subtitle" type="text" maxlength="160" autocomplete="off" aria-describedby="subtitle-hint">
+          <p class="form-hint" id="subtitle-hint">Leave empty to hide the subtitle. Saved in this browser only.</p>
+        </div>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn btn-link" id="settings-reset">Reset to defaults</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-normal" data-action="close">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="visually-hidden" id="status" role="status" aria-live="polite"></div>
+</body>
+</html>
