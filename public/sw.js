@@ -1,7 +1,8 @@
 'use strict';
 
-// Bump this when the application shell changes to evict old caches.
-const CACHE_NAME = 'motion-landing-v7';
+// The server replaces the placeholder with its start time (UTC, YYYYMMDDHHMMSS),
+// so every restart ships a new worker and evicts the old caches.
+const CACHE_NAME = 'motion-landing-__BUILD_VERSION__';
 
 const SHELL = [
   '/',

@@ -125,3 +125,36 @@ test('only allows GET and HEAD', async () => {
   assert.equal(res.status, 405);
   assert.equal(res.headers.allow, 'GET, HEAD');
 });
+
+test('serves the versioned service worker from memory when provided', async () => {
+  const publicDir = path.join(root, 'public');
+  await writeFile(path.join(publicDir, 'sw.js'), 'on-disk');
+  const workerServer = http.createServer(
+    createHandler({
+      html: '<p>page</p>',
+      serviceWorker: "const CACHE_NAME = 'motion-landing-20261030084601';",
+      publicDir,
+      iconsDir: path.join(root, 'icons'),
+      icons: [],
+    }),
+  );
+  await new Promise((resolve) => workerServer.listen(0, '127.0.0.1', resolve));
+  const savedPort = port;
+  port = workerServer.address().port;
+  try {
+    const res = await request('/sw.js');
+    assert.equal(res.status, 200);
+    assert.equal(res.body, "const CACHE_NAME = 'motion-landing-20261030084601';");
+    assert.match(res.headers['content-type'], /^text\/javascript/);
+    assert.equal(res.headers['cache-control'], 'no-cache');
+    assert.equal(res.headers['x-content-type-options'], 'nosniff');
+    const head = await request('/sw.js', { method: 'HEAD' });
+    assert.equal(head.status, 200);
+    assert.equal(head.body, '');
+  } finally {
+    port = savedPort;
+    await new Promise((resolve) => workerServer.close(resolve));
+  }
+  // Without a rendered worker, the file on disk is served as before.
+  assert.equal((await request('/sw.js')).body, 'on-disk');
+});

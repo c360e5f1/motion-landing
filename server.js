@@ -22,6 +22,7 @@ import { fileURLToPath } from 'node:url';
 import { listIcons, selectIcons, MAX_ICONS } from './lib/icons.js';
 import { renderPage } from './lib/render.js';
 import { createHandler } from './lib/server.js';
+import { buildVersion, renderServiceWorker } from './lib/version.js';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 
@@ -48,10 +49,17 @@ const icons = selectIcons(available, MAX_ICONS);
 const template = await readFile(config.templatePath, 'utf8');
 const html = renderPage(template, { title: config.title, subtitle: config.subtitle, icons });
 
+// A new version on every start makes clients install a fresh service worker
+// and drop the previous caches.
+const version = buildVersion();
+const workerSource = await readFile(path.join(config.publicDir, 'sw.js'), 'utf8');
+const serviceWorker = renderServiceWorker(workerSource, version);
+
 console.log(`Found ${available.length} icon(s) in ${config.iconsDir}; displaying ${icons.length}.`);
+console.log(`Version ${version}`);
 
 const server = http.createServer(
-  createHandler({ html, publicDir: config.publicDir, iconsDir: config.iconsDir, icons }),
+  createHandler({ html, serviceWorker, publicDir: config.publicDir, iconsDir: config.iconsDir, icons }),
 );
 
 server.listen(config.port, config.host, () => {

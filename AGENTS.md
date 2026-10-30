@@ -17,6 +17,7 @@ server.js                    Entry point: reads config, scans icons, renders pag
 lib/icons.js                 listIcons() directory scan, selectIcons() random pick (MAX_ICONS = 64)
 lib/render.js                escapeHtml(), renderIconMarkup(), plainTitle(), renderPage() template fill
 lib/server.js                createHandler(): routing, static files, security headers, CSP
+lib/version.js               buildVersion() start-time version, renderServiceWorker() placeholder fill
 templates/index.html         Page template with {{TITLE}}, {{TITLE_TEXT}}, {{SUBTITLE}}, {{ICONS}}
 public/app.js                All client behaviour: theme, clock, title/editor, wake lock, canvas scene, SW registration
 public/styles.css            Design tokens (light/dark), layout, text animations, orbs, controls, dialog
@@ -26,7 +27,7 @@ public/manifest.webmanifest  PWA manifest
 public/app-icons/            TV app icon (tv.svg) and generated PNGs (192, 512, maskable 512)
 scripts/generate-app-icons.mjs  Dependency-free SDF rasteriser that regenerates the PNG app icons
 icons/                       Sample icons (sample-*.svg); replaced or mounted over by the user
-test/                        icons.test.js, render.test.js, server.test.js (22 tests)
+test/                        icons.test.js, render.test.js, server.test.js, version.test.js (26 tests)
 Dockerfile                   node:alpine image, runs as `node` user, HOST=0.0.0.0, PORT=8080
 .github/workflows/main.yml   Builds and pushes ghcr.io image on push to `main`, with attestation
 ```
@@ -146,7 +147,7 @@ Lifecycle: the animation loop stops while the tab is hidden and resumes when it'
 - Precaches the app shell on install, deletes old caches on activate, and calls `skipWaiting` and `clients.claim`.
 - Navigations are network-first and cached under `/`, because the page changes with each server start.
 - `/icons/*` is cache-first. Other same-origin GETs are stale-while-revalidate.
-- Bump `CACHE_NAME` (currently `motion-landing-v7`) whenever a shell file changes, so clients pick up the new version.
+- `CACHE_NAME` is `motion-landing-__BUILD_VERSION__` in the source. At startup `server.js` replaces the placeholder with the start time in UTC as `YYYYMMDDHHMMSS` (`lib/version.js`) and `/sw.js` is served from memory with `Cache-Control: no-cache`. Every restart therefore ships a new worker and evicts old caches; no manual bump is needed.
 
 ## Deployment
 
@@ -156,10 +157,11 @@ Lifecycle: the animation loop stops while the tab is hidden and resumes when it'
 
 ## Tests
 
-`npm test` runs 22 tests, all of which currently pass:
+`npm test` runs 26 tests, all of which currently pass:
 - `icons.test.js`: selection bounds and randomness, no input mutation, filtering of hidden files, directories, symlinks and other extensions, missing directory.
 - `render.test.js`: escaping, placeholder filling, no re-expansion, one `<img>` per icon, no inline script or style, title marker handling.
-- `server.test.js`: page security headers and CSP, content types, HEAD, 304, icon allowlist and sandbox CSP, traversal, dotfile, malformed path and backslash rejection, 404s, method allowlist.
+- `server.test.js`: page security headers and CSP, content types, HEAD, 304, icon allowlist and sandbox CSP, traversal, dotfile, malformed path and backslash rejection, 404s, method allowlist, in-memory versioned `/sw.js`.
+- `version.test.js`: `YYYYMMDDHHMMSS` UTC formatting, placeholder replacement, `public/sw.js` keeps the placeholder in `CACHE_NAME`.
 
 There are no automated tests for `public/app.js`. To check client logic without a browser, run it in a `node:vm` sandbox with stub DOM/canvas objects (for example, a Proxy-based 2D context that counts draw calls and a fake `requestAnimationFrame` queue). Write the harness to `/tmp` and delete it afterwards. The agent shell has no browser or image tools, so say so instead of claiming visual verification.
 
@@ -172,5 +174,5 @@ There are no automated tests for `public/app.js`. To check client logic without 
 - Icon density: `ICON_DENSITY = 2` (twice the original density) was an explicit user choice. Keep it when reworking the scene.
 - When changing motion, don't modify the icons or other graphics (sample icons, TV app icon, corner button icons).
 - Security: keep the CSP strict (no inline script or style, no external origins), the icon allowlist and sandbox CSP, loopback-by-default binding, and the traversal and dotfile checks. Any change to routes, handlers or binding must keep `test/server.test.js` passing, and should add tests for new behaviour.
-- After editing shell assets (`/`, `styles.css`, `app.js`, `theme-init.js`, manifest, app icons), bump `CACHE_NAME` in `public/sw.js`.
+- Shell asset changes reach clients after a server restart, which generates a new `CACHE_NAME`. Keep the `__BUILD_VERSION__` placeholder in `public/sw.js`.
 - No new dependencies. The project is intentionally dependency-free.
