@@ -5,15 +5,15 @@ Motion Landing is a small progressive web application (PWA) that displays user-p
 
 ## Features
 
-- One full-screen page with a centered title and subtitle. It resizes to fit any screen and never shows scrollbars. Title words rise in out of a blur one after another, then a gradient accent bar grows in between the title and subtitle, and the subtitle follows. Highlighted words are filled with a shimmering gradient: wrap words in `*asterisks*` to highlight them, or leave out the asterisks to highlight the whole title.
-- Up to 64 icons, picked at random from `icons/` on each server start, are drawn on a canvas as a slowly drifting, diagram-style scene. Nearby icons are joined by dashed elbow connectors with small data packets moving along them. Icons fade in one after another, one is swapped for another every few seconds, and they shift slightly with the pointer. Icons behind the title fade out, and three blurred colour orbs drift behind everything. When the user has asked for reduced motion, a single still frame is shown.
+- One full-screen page with a centered title and subtitle. Resizes to fit any screen and never shows scrollbars. Highlighted words are filled with a shimmering gradient; wrap words in `*asterisks*` to highlight them, or leave out the asterisks to highlight the whole title.
+- Up to 64 icons, picked at random from `icons/` on each server start, are drawn on a canvas as a slowly drifting, diagram-style scene. Nearby icons are joined by dashed elbow connectors with small data packets moving along them. Icons fade in one after another, one is swapped for another every few seconds, and they shift slightly with the pointer. Icons behind the title fade out, and three blurred colour orbs drift behind everything. 
 - Corner controls:
   - Top left: switch between the light and dark themes. Your choice is saved in the browser. The default follows your system setting.
   - Top right: the current UTC time in ISO 8601 format, for example `2026-10-27T21:54:14Z`.
   - Bottom left: turn the screen wake lock on or off. It is on by default.
   - Bottom right: edit the title and subtitle. Changes are saved in the browser.
-- Installable as a PWA named "Motion Landing", with a TV icon. Works offline through a service worker.
-- No runtime dependencies. You only need Node.js 20 or later.
+- Installable as a PWA named "Motion Landing". Works offline through a service worker.
+- No runtime dependencies. Only needs Node.js 20 or later.
 
 ## Running
 
