@@ -22,7 +22,7 @@ Run this in a container with `compose.yml`
 ```
 services:
     motion-landing:
-      image: ghcr.io/c360e5f1/motion-landingl:latest
+      image: ghcr.io/c360e5f1/motion-landing:latest
       ports:
         - "8080:8080"
       restart: unless-stopped
