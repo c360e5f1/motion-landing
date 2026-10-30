@@ -392,7 +392,7 @@
     }
 
     /** How many icons fill the screen, relative to the original layout. */
-    const ICON_DENSITY = 2;
+    const ICON_DENSITY = 1.00;
 
     /** Grid cell size of the original layout (about one icon per cell). */
     function cellSize() {
